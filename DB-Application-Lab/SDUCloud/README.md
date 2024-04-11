@@ -8,6 +8,7 @@
 
 ## 项目结构
 
+<pre>
 
 SDUCloud
 │
@@ -73,4 +74,4 @@ SDUCloud
 ├── manage.py                   # 项目管理器
 └── README.md
 
-
+</pre>
