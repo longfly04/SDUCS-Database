@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- 参考：https://www.cnblogs.com/xjd-6/p/10931061.html -->
+    <style type="text/css">
+        .bgimg
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-width: 1000px;
+            z-index: -100;
+            zoom: 1;
+            background-color: #fff;
+            background: url(/static/static/static/images/cat.jpg) no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center 0;
+            opacity: 0.4;
+        }
+        #user_reg
+        {
+			font-family: 微软雅黑;
+			font-size: 35px;
+			text-align: center;
+			margin-top: 200px;
+            margin-bottom: 100px;
+            font-weight: bold;
+		}
+		form
+        {
+			width: 600px;					/*设置宽度，方便使其居中*/
+			margin: 40px auto auto auto;	/*上右下左*/
+			font-size: 25px;
+		}
+		input
+        {
+			height: 30px;
+			width: 20em;
+			margin-top: 5px;
+			margin-bottom: 5px;
+            margin-left: 60px;
+            border-radius: 15px;
+		}
+        input:focus{
+            border: 1px solid green;
+            background-color:skyblue;
+        }
+        select
+        {
+			height: 35px;
+			width: 20.5em;
+			margin-top: 5px;
+			margin-bottom: 5px;
+            margin-left: 60px;
+            border-radius: 15px;
+            outline-style: solid;
+            outline-color: green;
+            outline-width: 1px;
+        }
+		/*input标签下的属性选择器*/
+		input[type="submit"]{
+			height: 35px;
+			width: 30em;
+			margin-top: 40px;
+			margin-left: 100px;
+		}
+        input[type="submit"]:focus{
+            border: 1px solid green;
+            background-color:green;
+        }
+        select:focus{
+            border: 1px solid skyblue;
+            background-color:skyblue;
+        }
+        textarea{
+            font-family: 微软雅黑;
+            width: 20em;
+            height: 100px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+            margin-left: 60px;
+            border-radius: 15px;
+            outline-style: solid;
+            outline-color: green;
+            outline-width: 1px;
+        }
+        textarea:focus{
+            border: 1px solid skyblue;
+            background-color:skyblue;
+        }
+        a{
+            text-decoration: none;
+            color: gold;
+        }
+        div,ul,li,p{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .nav{
+            width: 100%;
+            height: 60px;
+            font-size: 14px;
+            font-weight: bolder;
+            font-family: 微软雅黑;
+            background-color: pink;
+            color: black;
+            position: relative;
+             display: block;
+             z-index: 99;
+        }
+
+        .nav_box{
+            width: 550px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .nav_box ul{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav_box ul li{
+            float: left;
+            line-height: 50px;
+            cursor:pointer;
+        }
+        .nav_box_t{
+            width: 100%;
+            height: 200px ;
+            background-color: pink;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            display: none;
+            z-index: 99;
+        }
+        .nav_item>li>a{
+            padding: 23px 0;
+            font-size: 20px;
+        }
+        .nav_item>li>a:hover{
+            border-bottom: 3px solid red;
+            color: black;
+            font-size: 20px;
+        }
+        .nav_item>li:hover>.nav_box_t{
+            display: block;
+        }
+    </style>
+
+    <title>Create Repository</title>
+</head>
+
+
+<script type="text/javascript">
+	//onblur失去焦点事件，用户离开输入框时执行 JavaScript 代码：
+
+    // 匹配至多100位仓库名和1000位仓库介绍，前者由数字和字母组成
+  	function validate_form()
+    {
+        var reponame = document.getElementById("reponame").value;
+        var nameReg = /^\w{1,100}$/;
+  		if (reponame != "" && nameReg.test(reponame) != false)
+        {
+            alert("信息填写正确，可以正常提交！");
+            console.log("信息填写正确，可以正常提交！");
+            return true;
+        }
+        else
+        {
+            alert("仓库名不符合要求，提交失败，请重新填写！");
+  			console.log("仓库名不符合要求，提交失败，请重新填写！");
+  			return false;
+        }
+    }
+
+</script>
+
+
+
+
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+
+        <div class="nav_box">
+            <ul class="nav_item">
+                <li><a href="/">首页</a>
+                    <!-- <div class="nav_box_t">
+                    </div> -->
+                </li>
+                <li><a href="/repository/searchrepo">发现</a>
+                </li>
+                <li><a href="/repository/createrepo">建库</a>
+                </li>
+                <li><a href="/user/index">个人信息</a>
+                </li>
+                <li><a href="/user/exit">登出</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- 背景图片 -->
+    <div class="bgimg">
+        <img src= {% static "static/images/cat.jpg" %} alt="VCloudBackground" title="VCloudBackground">
+    </div>
+
+    <div id="user_reg">VCLOUD 文件管理系统</div>
+
+	<form action="#" method="post" name="form" >
+		<table>
+			<tr>
+				<td>新建文件夹</td>
+				<td><input type="text" id="folder" name="folder"</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+                    <input type="submit" id="submit_form" value="为新文件夹上传文件哦！" onclick="return validate_form()"/>
+				</td>
+			</tr>
+		</table>
+        <span style="color: red;">{{ message }}</span>
+	</form>
+</body>

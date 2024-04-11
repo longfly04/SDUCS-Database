@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- 参考：https://www.cnblogs.com/xjd-6/p/10931061.html -->
+    <style type="text/css">
+        .bgimg
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-width: 1000px;
+            z-index: -100;
+            zoom: 1;
+            background-color: #fff;
+            background: url(/static/static/static/images/cat.jpg) no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center 0;
+            opacity: 0.4;
+        }
+        #user_index
+        {
+			font-family: 微软雅黑;
+			font-size: 40px;
+			margin-left: 500px;
+			margin-top: 100px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: orange;
+		}
+		form
+        {
+			width: 700px;					/*设置宽度，方便使其居中*/
+			margin: 40px auto auto auto;	/*上右下左*/
+			font-size: 25px;
+		}
+		input
+        {
+			height: 30px;
+			width: 18em;
+			margin-top: 5px;
+			margin-bottom: 5px;
+            margin-left: 40px;
+		}
+		input:focus{
+            border: 1px solid green;
+            background-color:skyblue;
+        }
+		input[type="submit"]{
+			height: 40px;
+			width: 6em;
+			margin-top: 20px;
+            margin-left: 100px;
+            border-radius: 10px;
+            color: white;
+            background-color: green;
+            font-size: 25px;
+            font-weight: bolder;
+		}
+        input[type="submit"]:focus{
+            border: 1px solid green;
+            background-color:green;
+        }
+		input[type="button"]{
+			height: 40px;
+			width: 6em;
+			margin-top: 20px;
+            border-radius: 10px;
+            color: white;
+            background-color: green;
+            font-size: 25px;
+            font-weight: bolder;
+		}
+        input[type="button"]:focus{
+            border: 1px solid green;
+            background-color:green;
+        }
+        #user_picture{
+            height: 50px;
+            width: 50px;
+            border-radius: 100%;
+            outline-style: double;
+            outline-color: yellow;
+            outline-width: 5px;
+            overflow: hidden;
+            margin-left: 50px;
+        }
+        #user_name{
+            font-size: 20px;
+            color: gold;
+            font-weight: bolder;
+            margin-left: 100px;
+        }
+        #issue_index
+        {
+			font-family: 微软雅黑;
+			font-size: 40px;
+			margin-left: 50px;
+			margin-top: 100px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: blue;
+		}
+        #issue_info{
+            font-family: 微软雅黑;
+            width: 1000px;
+			margin-left: 50px;
+			margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            outline-style: solid;
+            outline-color: skyblue;
+            outline-width: 3px;
+            background-color: skyblue;
+        }
+        #issue_article{
+            font-size: 20px;
+            color: black;
+            font-weight: bolder;
+        }
+        a{
+            text-decoration: none;
+            color: gold;
+        }
+        #issue_state{
+            align-items: center;
+            font-size: 20px;
+            color: red;
+            font-weight: bolder;
+        }
+        #issue_intro{
+			font-size: 15px;
+        }
+    
+        div,ul,li,p{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .nav{
+            width: 100%;
+            height: 60px;
+            font-size: 14px;
+            font-weight: bolder;
+            font-family: 微软雅黑;
+            background-color: pink;
+            color: black;
+            position: relative;
+             display: block;
+             z-index: 99;
+        }
+
+        .nav_box{
+            width: 550px;
+            height: 100%;
+            margin: 0 auto;
+        }
+        .nav_box ul{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav_box ul li{
+            float: left;
+            line-height: 50px;
+            cursor:pointer;
+        }
+        .nav_box_t{
+            width: 100%;
+            height: 200px ;
+            background-color: pink;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            display: none;
+            z-index: 99;
+        }
+        .nav_item>li>a{
+            padding: 23px 0;
+            font-size: 20px;
+        }
+        .nav_item>li>a:hover{
+            border-bottom: 3px solid red;
+            color: black;
+            font-size: 20px;
+        }
+        .nav_item>li:hover>.nav_box_t{
+            display: block;
+        }
+
+        /* Switch开关样式 */
+        /* 参考：https://proto.io/freebies/onoff/ */
+        .onoffswitch {
+            position: relative; width: 105px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+            margin-top: 30px;
+            margin-left: 90%;
+        }
+        .onoffswitch-checkbox {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 20px;
+        }
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            box-sizing: border-box;
+        }
+        .onoffswitch-inner:before {
+            content: "PUBLIC";
+            padding-left: 10px;
+            background-color: #34A7C1; color: #FFFFFF;
+        }
+        .onoffswitch-inner:after {
+            content: "PRIVATE";
+            padding-right: 10px;
+            background-color: #EEEEEE; color: #999999;
+            text-align: right;
+        }
+        .onoffswitch-switch {
+            display: block; width: 19px; margin: 5.5px;
+            background: #FFFFFF;
+            position: absolute; top: 0; bottom: 0;
+            right: 71px;
+            border: 2px solid #999999; border-radius: 20px;
+            transition: all 0.3s ease-in 0s; 
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px; 
+        }
+        .offonswitch {
+            position: relative; width: 105px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+            margin-top: 30px;
+            margin-left: 90%;
+        }
+        .offonswitch-checkbox {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .offonswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 20px;
+        }
+        .offonswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+        .offonswitch-inner:before, .offonswitch-inner:after {
+            display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            box-sizing: border-box;
+        }
+        .offonswitch-inner:before {
+            content: "PRIVATE";
+            padding-left: 10px;
+            background-color: #EEEEEE; color: #999999;
+        }
+        .offonswitch-inner:after {
+            content: "PUBLIC";
+            padding-right: 10px;
+            background-color: #34A7C1; color: #FFFFFF;
+            text-align: right;
+        }
+        .offonswitch-switch {
+            display: block; width: 19px; margin: 5.5px;
+            background: #FFFFFF;
+            position: absolute; top: 0; bottom: 0;
+            right: 71px;
+            border: 2px solid #999999; border-radius: 20px;
+            transition: all 0.3s ease-in 0s; 
+        }
+        .offonswitch-checkbox:checked + .offonswitch-label .offonswitch-inner {
+            margin-left: 0;
+        }
+        .offonswitch-checkbox:checked + .offonswitch-label .offonswitch-switch {
+            right: 0px; 
+        }
+    </style>
+
+    <title>User Index</title>
+</head>
+
+
+<script src={% static "static/js/jquery-3.6.0.min.js" %} type="text/javascript"></script>
+<script type="text/javascript">
+    function changeSwitch() {
+        var state = document.getElementById("state").value;
+        var topic = document.getElementById("topic").value;
+        var repo = document.getElementById("repo").value;
+        if (state == "OPEN")
+        {
+            var isChecked = document.getElementById("myonoffswitch").checked;
+            if(isChecked) {
+                //do what ever you need here when checked
+                alert("已经把问题状态修改为公开了喵！");
+                $.ajax({
+                    url:  "/repository/"+repo+"/viewissue/"+topic+"/changestate",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "state": "OPEN"
+                    }),
+                    dataType:"json",
+                    success: function (data) {
+                        console.log("后台修改状态 ",data)
+                    }
+                });
+            }
+            else {
+                //do what ever you need when not checked
+                alert("已经把问题状态修改为关闭了喵！");
+                $.ajax({
+                    url:  "/repository/"+repo+"/viewissue/"+topic+"/changestate",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "state": "CLOSE"
+                    }),
+                    dataType:"json",
+                    success: function (data) {
+                        console.log("后台修改状态 ",data)
+                    }
+                });
+            }
+        }
+        else
+        {
+            var isChecked = document.getElementById("myoffonswitch").checked;
+            if(isChecked) {
+                //do what ever you need here when checked
+                alert("已经把问题状态修改为关闭了喵！");
+                $.ajax({
+                    url:  "/repository/"+repo+"/viewissue/"+topic+"/changestate",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "state": "CLOSE"
+                    }),
+                    dataType:"json",
+                    success: function (data) {
+                        console.log("后台修改状态 ",data)
+                    }
+                });
+            }
+            else {
+                //do what ever you need when not checked
+                alert("已经把问题状态修改为开放了喵！");
+                $.ajax({
+                    url:  "/repository/"+repo+"/viewissue/"+topic+"/changestate",
+                    type: "POST",
+                    data: JSON.stringify({
+                        "state": "OPEN"
+                    }),
+                    dataType:"json",
+                    success: function (data) {
+                        console.log("后台修改状态 ",data)
+                    }
+                });
+            }
+        }
+    }
+
+</script>
+
+
+<body>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+
+        <div class="nav_box">
+            <ul class="nav_item">
+                <li><a href="/">首页</a>
+                    <!-- <div class="nav_box_t">
+                    </div> -->
+                </li>
+                <li><a href="/repository/searchrepo">发现</a>
+                </li>
+                <li><a href="/repository/createrepo">建库</a>
+                </li>
+                <li><a href="/user/index">个人信息</a>
+                </li>
+                <li><a href="/user/exit">登出</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- 背景图片 -->
+    <div class="bgimg">
+        <img src= {% static "static/images/cat.jpg" %} alt="VCloudBackground" title="VCloudBackground"/>
+    </div>
+
+    <div style="display: none;">
+        <input id="repo" name="repo" value="{{ repo }}" />
+    </div>
+    <div style="display: none;">
+        <input id="state" name="state" value="{{ state }}" />
+    </div>
+    <div style="display: none;">
+        <input id="topic" name="state" value="{{ topic }}" />
+    </div>
+
+    <!-- 问题开放状态按钮 -->
+    {% if is_contributor %}
+        {% if state == "OPEN" %}
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="0" onchange="changeSwitch()" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        {% else %}
+            <div class="offonswitch">
+                <input type="checkbox" name="offonswitch" class="offonswitch-checkbox" id="myoffonswitch" tabindex="0" onchange="changeSwitch()" checked>
+                <label class="offonswitch-label" for="myoffonswitch">
+                    <span class="offonswitch-inner"></span>
+                    <span class="offonswitch-switch"></span>
+                </label>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div id="issue_index">
+        <a href="#"><u>{{ topic }} </u></a>
+        <input type="button" value="加帖" onclick='location.href=("{{ topic }}/addtopic")' />
+    </div>
+
+    <table>
+        {% for username, picture, article, time in issues %}
+            <tr>
+                <td>
+                    <div id="issue_info">
+                        <div id="user_picture">
+                            <img src={% static picture %}  width = 50px hegith = 50px alt="UserPicture" title="UserPicture" border-radius=20px/>
+                        </div>
+                        <div id="user_name"><p> &ensp; &ensp; <a href="/user/{{ username }}/index"> {{ username }} </a> </p></div>
+                        {% for line in article %}
+                        <div id="issue_article"><p> &ensp; {{ line }} </a> </p></div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>

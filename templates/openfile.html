@@ -1,0 +1,337 @@
+<!-- 参考：https://blog.csdn.net/chuck_robert/article/details/118467038?spm=1001.2014.3001.5501 -->
+
+
+<!DOCTYPE html>
+
+{% load static %}
+
+<head>
+  <style>
+    .bgimg
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-width: 1000px;
+        z-index: -100;
+        zoom: 1;
+        background-color: #fff;
+        background: url(/static/static/static/images/cat.jpg) no-repeat;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-position: center 0;
+        opacity: 0.4;
+    }
+    #filename{
+        font-size: 30px;
+        color: black;
+        font-weight: bolder;
+    }
+
+    a{
+        text-decoration: none;
+        color: gold;
+    }
+    div,ul,li,p{
+        margin: 0;
+        padding: 0;
+    }
+    li{
+        list-style: none;
+    }
+    .nav{
+        width: 100%;
+        height: 60px;
+        font-size: 14px;
+        font-weight: bolder;
+        font-family: 微软雅黑;
+        background-color: pink;
+        color: black;
+        position: relative;
+            display: block;
+            z-index: 99;
+    }
+    .nav_box{
+        width: 550px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .nav_box ul{
+        display: flex;
+        justify-content: space-between;
+    }
+    .nav_box ul li{
+        float: left;
+        line-height: 50px;
+        cursor:pointer;
+    }
+    .nav_box_t{
+        width: 100%;
+        height: 200px ;
+        background-color: pink;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        display: none;
+        z-index: 99;
+    }
+    .nav_item>li>a{
+        padding: 23px 0;
+        font-size: 20px;
+    }
+    .nav_item>li>a:hover{
+        border-bottom: 3px solid red;
+        color: black;
+        font-size: 20px;
+    }
+    .nav_item>li:hover>.nav_box_t{
+        display: block;
+    }
+
+    #cnblogs_post_body .cnblogs_code {
+      /* background-color: rgba(152, 147, 147, 0.28); */
+      /* border: 1px solid rgba(255, 251, 251, 0); */
+      border-radius: 4px;
+      color: #000;
+      font-family: Courier New !important;
+      font-size: 13px !important;
+      margin: 5px 0;
+      overflow: auto;
+      padding: 5px;
+    }
+    .hljs-built_in,
+    .hljs-keyword,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-tag {
+      color: #332870 !important;
+    }
+
+    .hljs-emphasis,
+    .hljs-strong {
+      color: #a8a8a2 !important;
+    }
+    .hljs-built_in,
+    .hljs-keyword,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-tag {
+      color: #bababa !important;
+    }
+
+    .hljs-bullet,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-number,
+    .hljs-quote,
+    .hljs-regexp {
+      color: #27c94a !important;
+    }
+
+    .hljs-code,
+    .hljs-selector-class {
+      color: #eeff00 !important;
+    }
+
+    .hljs-emphasis {
+      font-style: italic !important;
+    }
+
+    .hljs-attribute,
+    .hljs-keyword,
+    .hljs-name,
+    .hljs-section,
+    .hljs-selector-tag,
+    .hljs-variable {
+      color: #00c3ff !important;
+    }
+
+    .hljs-attr,
+    .hljs-params {
+      color: #b9b9b9 !important;
+    }
+
+    .hljs-string {
+      color: #ffbb00 !important;
+    }
+
+    .hljs-addition,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-selector-attr,
+    .hljs-selector-id,
+    .hljs-selector-pseudo,
+    .hljs-subst,
+    .hljs-symbol,
+    .hljs-template-tag,
+    .hljs-template-variable,
+    .hljs-title,
+    .hljs-type {
+      color: #dfe231 !important;
+    }
+
+    .hljs-comment,
+    .hljs-deletion {
+      color: #008839 !important;
+    }
+
+    .hljs-meta {
+      color: #00ff0d !important;
+    }
+    #cnblogs_post_body .toc ul {
+      max-height: 550px;
+      overflow-y: auto;
+    }
+
+    .cnblogs-markdown .hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0.5em !important;
+      /* background: #2b2b2b !important; */
+      background:rgba(0, 0, 0, 0.7) !important;
+      font-size: 14px !important;
+      color: #bababa !important;
+      font-family: Source Code Pro, Consolas, Menlo, Monaco, Courier New,
+        monospace !important;
+    }
+    #cnblogs_post_body h1::before {
+      content: "H1";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #cnblogs_post_body h2::before {
+      content: "H2";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #cnblogs_post_body h3::before {
+      content: "H3";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #mainContent #post_detail #cnblogs_post_body h4::before {
+      content: "h4";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #cnblogs_post_body h5::before {
+      content: "h5";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #cnblogs_post_body h6::before {
+      content: "h6";
+      margin-right: 10px;
+      color: gainsboro;
+    }
+    #cnblogs_post_body td.hljs-ln-numbers {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      text-align: center;
+      color: #ccc;
+      border-right: 1px solid #ccc;
+      vertical-align: top;
+      padding-right: 5px;
+
+      /* your custom style here */
+    }
+
+    #cnblogs_post_body .hljs td {
+      border-collapse: inherit;
+      min-width: unset;
+      padding-left: 20px;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+
+
+<body>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+
+        <div class="nav_box">
+            <ul class="nav_item">
+                <li><a href="/">首页</a>
+                    <!-- <div class="nav_box_t">
+                    </div> -->
+                </li>
+                <li><a href="/repository/searchrepo">发现</a>
+                </li>
+                <li><a href="/repository/createrepo">建库</a>
+                </li>
+                <li><a href="/user/index">个人信息</a>
+                </li>
+                <li><a href="/user/exit">登出</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- 背景图片 -->
+    <div class="bgimg">
+        <img src= {% static "static/images/cat.jpg" %} alt="VCloudBackground" title="VCloudBackground"/>
+    </div>
+    
+    <div id="filename"> {{ filename }} </div>
+
+    {% if language %} 
+    <!-- 代码框 -->
+    <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+        <pre>
+            <code class="language-{{ language }}">{% for line in file %}{{ line }}{% endfor %}</code>
+        </pre>
+    </div>
+    {% else %}
+    <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+        <pre>
+            <code class="language-txt">打开的不是支持的文本文件！</code>
+        </pre>
+    </div>
+    {% endif %}
+
+
+    {% for history_id, history_file in history %}
+    {% if language %} 
+    <div id="filename"> {{ history_id }} </div>
+    <!-- 代码框 -->
+    <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+        <pre>
+            <code class="language-{{ language }}">{% for line in history_file %}{{ line }}{% endfor %}</code>
+        </pre>
+    </div>
+    {% else %}
+    <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+        <pre>
+            <code class="language-txt">打开的不是支持的文本文件！</code>
+        </pre>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    
+    <div>
+    <script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
+        hljs.initLineNumbersOnLoad();
+
+        $(document).ready(function () {
+            $("code.hljs").each(function (i, block) {
+            hljs.lineNumbersBlock(block);
+            });
+        });
+    </script>
+    </div>
+
+</body>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- 参考：https://www.cnblogs.com/xjd-6/p/10931061.html -->
+    <style type="text/css">
+        .bgimg
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-width: 1000px;
+            z-index: -100;
+            zoom: 1;
+            background-color: #fff;
+            background: url(/static/static/static/images/cat.jpg) no-repeat;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            background-position: center 0;
+            opacity: 0.5;
+        }
+    </style>
+
+    <title>Jump</title>
+</head>
+
+
+
+<body>
+    <div class="bgimg">
+        <img src= {% static "static/images/cat.jpg" %} alt="VCloudBackground" title="VCloudBackground">
+    </div>
+    
+    <p> {{ message }} </p>
+
+    <meta http-equiv="refresh" content="5;url={{ next_url }}">
+
+    <p>还有<span id="sp">5</span>秒跳转界面...</p>
+
+
+</body>
+
+<script type="text/javascript">
+
+    onload = function() 
+    {
+        setInterval(go, 1000)
+    };
+
+    var x=4;
+    function go()
+    {
+        if (x >= 0){
+            document.getElementById("sp").innerText=x;
+        }
+        else {
+            location.href=next_url; 
+        }
+        x--;
+    }
+</script>
+
+</html>
+        

@@ -1,0 +1,79 @@
+<!-- 参考：https://www.jq22.com/jquery-info13357 -->
+
+<!doctype html>
+
+{% load static %}
+
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700,900|Fira+Sans:400,400italic' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href={% static "static/css/reset.css" %}> <!-- CSS reset -->
+	<link rel="stylesheet" href={% static "static/css/style.css" %}> <!-- Resource style -->
+	<script src={% static "static/js/modernizr.js" %}></script> <!-- Modernizr -->
+
+	<title>Project Timeline</title>
+</head>
+
+
+<body>
+
+	<section class="cd-horizontal-timeline">
+		<div class="timeline">
+			<div class="events-wrapper">
+				<div class="events">
+					<ol>
+						<li><a href="#0" data-date={{ today }} class="selected">{{ today }}</a></li>
+						{% for p in projects %}
+						<li><a href="#0" data-date={{ p.time }}>{{ p.time }}</a></li>
+						{% endfor %}
+					</ol>
+
+					<span class="filling-line" aria-hidden="true"></span>
+				</div> <!-- .events -->
+			</div> <!-- .events-wrapper -->
+				
+			<ul class="cd-timeline-navigation">
+				<li><a href="#0" class="prev inactive">Prev</a></li>
+				<li><a href="#0" class="next">Next</a></li>
+			</ul> <!-- .cd-timeline-navigation -->
+		</div> <!-- .timeline -->
+
+		<div class="events-content">
+			<ol>
+				<li class="selected" data-date={{ today }}>
+					<h2>Project TimeLine</h2>
+					<em>{{ strtoday }}</em>
+					<p>	
+						With a Tiny Dream<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Waiting for Tiny Snow...
+					</p>
+					<p><a href="./createproject">新建计划</a></p>
+				</li>
+	
+				{% for p in projects %}
+				<li data-date={{ p.time }}>
+					<h2>{{ p.topic }}</h2>
+					<em>{{ p.strtime }}</em>
+					<p>	
+						{{ p.article }}
+					</p>
+					<p><a href="./createproject">新建计划</a></p>
+				</li>
+				{% endfor %}
+
+			</ol>
+		</div> <!-- .events-content -->
+	</section>
+
+
+	<!-- <script src={% static "static/js/jquery-3.6.0.min.js" %}></script> -->
+	<!-- <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script> -->
+	<script src={% static "static/js/jquery-1.10.2.min.js" %}></script>
+	<script src={% static "static/js/jquery.mobile.custom.min.js" %}></script>
+	<script src={% static "static/js/main.js" %}></script> <!-- Resource jQuery -->
+
+</body>
+</html>
